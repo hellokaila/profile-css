@@ -1,0 +1,107 @@
+<html>
+  <head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <meta content="utf-8" http-equiv="encoding" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <style>
+      body {
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Arial, sans-serif;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* Aurora Background */
+      .aurora {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(-45deg, #0f172a, #1b4b61, #27466d, #6c2a77, #3a0c49);
+        background-size: 400% 400%;
+        animation: auroraAnimation 8s ease infinite;
+        z-index: -1;
+        filter: blur(5px);
+      }
+
+      @keyframes auroraAnimation {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      /* Glowing Effect */
+      .glow {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 10%, rgba(0, 0, 0, 0) 70%);
+        mix-blend-mode: overlay;
+        z-index: -1;
+      }
+
+      /* Default Content (Hidden by Default) */
+      .content {
+        display: none; 
+        color: white;
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+        text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.8);
+      }
+
+      * {
+        border: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="aurora"></div>
+    <div class="glow"></div>
+    <div class="content">This is your custom aurora-themed embed.</div>
+
+    <script>
+      const hideHeader = findGetParameter("hideHeader") || "1";
+      const hideFooter = findGetParameter("hideFooter") || "1";
+      const transparent = findGetParameter("transparent") || "0"; // Default to NOT transparent so aurora is visible
+
+      if (hideHeader == "1") {
+        var styleSheet = document.createElement("style");
+        styleSheet.innerText = `body > *:first-child { display: none !important; }`;
+        document.head.appendChild(styleSheet);
+      }
+
+      if (hideFooter == "1") {
+        var styleSheet = document.createElement("style");
+        styleSheet.innerText = `body > *:last-child { display: none !important; }`;
+        document.head.appendChild(styleSheet);
+      }
+
+      if (transparent == "1") {
+        document.body.style.background = "transparent";
+      }
+
+      function findGetParameter(parameterName) {
+        var result = null,
+          tmp = [];
+        location.search
+          .substr(1)
+          .split("&")
+          .forEach(function (item) {
+            tmp = item.split("=");
+            if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+          });
+        return result;
+      }
+    </script>
+  </body>
+</html>
