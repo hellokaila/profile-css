@@ -1,0 +1,171 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Irish+Grover&family=Kaushan+Script&display=swap');
+
+/* =========================================================
+   ELLARA — Soft Dawn (non-scroll, art on right, wrap-safe)
+   TUNE ONLY THE VARIABLES BELOW
+   ========================================================= */
+.ellara-wrap{
+  /* palette */
+  --ink:#24151b;
+  --muted:#7a5e69;
+  --accent:#e97aa6;
+
+  /* glow + lines */
+  --glow:#ffcfe3;
+  --line:rgba(255,255,255,.35);
+
+  /* background gradient */
+  --grad1:#fff1f7;
+  --grad2:#ffe3ef;
+  --grad3:#ffd4e6;
+
+  /* layout */
+  --radius:24px;
+  --pad:26px;
+  --shadow:0 10px 45px rgba(110,20,60,.18);
+
+  /* ART SIZE + WRAP CONTROL (key knobs) */
+  --artW: 420px;
+  --artH: 420px;
+  --wrapStart: 260px;   /* <— start the wrap lower; tweak 230–300px as needed */
+  --footH: 64px;        /* <— NEW: actual footer height */
+}
+
+/* ---- Card shell ---- */
+.el-card{
+  position:relative;
+  margin:18px auto;
+  max-width:900px;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.12));
+  border:1px solid rgba(255,255,255,.16);
+  isolation:isolate;
+}
+
+/* ---- Soft background with faint sparkles ---- */
+.el-sky{
+  position:absolute; inset:0; z-index:0;
+  background:
+    radial-gradient(1200px 520px at 8% -16%, rgba(255,255,255,.55), transparent 60%),
+    linear-gradient(180deg, var(--grad1), var(--grad2) 45%, var(--grad3));
+}
+.el-sky:before,
+.el-sky:after{
+  content:""; position:absolute; inset:0;
+  background:
+    radial-gradient(1px 1px at 12% 22%, #fff 60%, transparent 61%),
+    radial-gradient(1px 1px at 38% 18%, #fff 60%, transparent 61%),
+    radial-gradient(1px 1px at 64% 30%, #fff 60%, transparent 61%),
+    radial-gradient(1px 1px at 82% 12%, #fff 60%, transparent 61%),
+    radial-gradient(1px 1px at 88% 44%, #fff 60%, transparent 61%),
+    radial-gradient(1px 1px at 20% 70%, #fff 60%, transparent 61%),
+    radial-gradient(1px 1px at 46% 86%, #fff 60%, transparent 61%),
+    radial-gradient(1px 1px at 72% 74%, #fff 60%, transparent 61%);
+  opacity:.55;
+}
+.el-sky:after{ filter:blur(.4px); opacity:.35; transform:scale(1.02); }
+
+.el-card:hover .el-art{
+  transform: translateY(-2px);
+  filter: drop-shadow(0 0 22px rgba(255,207,227,.65));
+}
+
+/* ---- Header ---- */
+.el-head{
+  position:relative; z-index:2;
+  padding: calc(var(--pad) + 2px) calc(var(--pad) + 8px) 12px var(--pad);
+  /* reserve space so the title never hits the art */
+  padding-right: calc(var(--pad) + var(--artW) + 24px);
+  color:#5b2c3a;
+  text-shadow: 0 0 18px rgba(255,207,227,.45);
+  border-bottom:1px solid var(--line);
+  background: linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0));
+}
+.el-head h1{
+  margin:0;
+  font-family:"Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;
+  font-weight:900; letter-spacing:.1em; font-size:24px;
+}
+.el-head .tag{
+  margin:8px 0 0;
+  letter-spacing:.32em; text-transform:uppercase; font-size:12px;
+  color:#8a5b6d;
+}
+
+.ellara-wrap .el-body{
+  position: relative;
+  z-index: 2;
+  display: block;
+  padding: 18px var(--pad) 16px var(--pad);
+  color: var(--ink);
+  background: linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,.78));
+  line-height: 1.7;
+  border-bottom: 1px solid rgba(0,0,0,.06);
+}
+
+/* WOLF — a floated image at the end; text will wrap left of it */
+.el-art{
+  float: right;
+  width: 420px;                 /* your art width */
+  height: auto;
+  margin: 8px 0 56px 16px;      /* left gap + space above footer */
+  filter: drop-shadow(0 18px 28px rgba(0,0,0,.22));
+}
+
+/* Optional: make the wrap follow the PNG’s alpha (modern browsers) */
+.el-art{
+  shape-outside: url("WOLF.png");   /* same src as the image */
+  shape-image-threshold: .6;
+  shape-margin: 12px;               /* extra breathing room */
+}
+
+/* Remove the old helper + absolute art rules */
+.ellara-wrap .el-body::before{ content:none; }
+
+.ellara-wrap .el-body p{ margin:0 0 12px; }
+.ellara-wrap .el-body b{
+  color:var(--accent);
+  text-shadow:0 0 18px rgba(255,207,227,.5);
+  font-family:"Kaushan Script",cursive;
+}
+/* scoped italics to avoid bleeding onto the forum */
+.ellara-wrap .el-body i,
+.ellara-wrap .el-body em{ color:#b98799; }
+
+/* ---- Footer ---- */
+.el-foot{
+  position:relative; z-index:2;
+  display:flex; justify-content:flex-end; align-items:center; gap:10px;
+  padding:10px var(--pad) 16px;
+  min-height: var(--footH);         /* <— NEW */
+  color:#6c3c4d;
+  background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.16));
+}
+.el-foot .credit{ font-size:11px; letter-spacing:.22em; text-transform:uppercase; opacity:.9; }
+
+/* ---- Ensure art fully visible even if body is short ---- */
+.el-card{ min-height: calc(var(--artH) + var(--footH) + 100px); }
+
+/* =========================================================
+   Mobile fallback: show text only (clean reading view)
+   ========================================================= */
+@media (max-width:760px){
+  .el-sky, .el-art, .el-head, .el-foot{ display:none !important; }
+  .el-card{
+    max-width:100% !important;
+    margin:0 !important;
+    border:0 !important;
+    border-radius:0 !important;
+    box-shadow:none !important;
+    background:transparent !important;
+  }
+  .ellara-wrap .el-body{
+    padding: 0 12px 18px 12px !important;
+    background: transparent !important;
+    border:0 !important;
+    color:#1a1a1a !important;
+    line-height:1.7 !important;
+  }
+}
